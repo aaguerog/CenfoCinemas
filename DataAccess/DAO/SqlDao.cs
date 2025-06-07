@@ -1,11 +1,13 @@
-﻿using System;
+﻿using DataAccess.DAO;
+using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.DAO
+namespace DataAccess.DAOs
 {
     /*
      * Clase u objeto que se encarga de la comunicación con la base de datos.
@@ -24,7 +26,7 @@ namespace DataAccess.DAO
         //Paso 2: Redefinir el constructor default y convertirlo en privado
         private SqlDao()
         {
-            _connectionString = string.Empty;
+            _connectionString = @"Data Source=srv-sqldatabase-aaguero.database.windows.net;Initial Catalog=cenfocinemas-db;Persist Security Info=True;User ID=sysman;Password=Cenfotec123!;Trust Server Certificate=True";
         }
 
         //Paso 3: Definir el metodo que expone la instancia
@@ -43,11 +45,13 @@ namespace DataAccess.DAO
         //Metodo para la ejecución de Store Procedures sin retorno
         public void ExecuteProcedure(SqlOperation sqlOperation)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            //Conectarse a la base de datos
+            //Ejecutar el Store Procedure
+            using (var conn = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand(sqlOperation.ProcedureName, conn)
                 {
-                    CommandType = System.Data.CommandType.StoredProcedure;
+                    CommandType = System.Data.CommandType.StoredProcedure
                 })
 
                 {
@@ -56,10 +60,11 @@ namespace DataAccess.DAO
                     {
                         command.Parameters.Add(param);
                     }
-                    //Ejecuta el SP
+                    //Ejectura el SP
                     conn.Open();
                     command.ExecuteNonQuery();
                 }
+
             }
         }
 

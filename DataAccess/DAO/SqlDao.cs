@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,8 +41,26 @@ namespace DataAccess.DAO
         }
 
         //Metodo para la ejecución de Store Procedures sin retorno
-        public void ExecuteProcedure(SqlOperation operation)
+        public void ExecuteProcedure(SqlOperation sqlOperation)
         {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var command = new SqlCommand(sqlOperation.ProcedureName, conn)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure;
+                })
+
+                {
+                    //Set de los parametros
+                    foreach (var param in sqlOperation.Parameters)
+                    {
+                        command.Parameters.Add(param);
+                    }
+                    //Ejecuta el SP
+                    conn.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
         //Metodo para la ejecución de Store Procedures con retorno

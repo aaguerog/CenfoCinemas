@@ -84,28 +84,6 @@ public class Program
 
                 break;
 
-            case 3:
-
-                Console.WriteLine("-- Consultar Usuario por ID --");
-
-                Console.Write("Digite el ID del usuario: ");
-                var idToSearch = int.Parse(Console.ReadLine());
-
-                var userToSearch = new User() { Id = idToSearch };
-
-                uCrud = new UserCrudFactory();
-                var retrievedUser = uCrud.RetrieveById<User>(userToSearch);
-
-                if (retrievedUser != null)
-                {
-                    Console.WriteLine(JsonConvert.SerializeObject(retrievedUser));
-                }
-                else
-                {
-                    Console.WriteLine("Usuario no encontrado.");
-                }
-            break;
-
             case 5:
                 Console.WriteLine("-- Agregar Película --");
 

@@ -58,7 +58,6 @@ namespace DataAccess.CRUD
             }
             return lstUsers;
         }
-
         public override T RetrieveById<T>()
         {
             throw new NotImplementedException();

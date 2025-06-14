@@ -18,14 +18,14 @@ public class Program
         Console.WriteLine("Bienvenido a CenfoCinemas");
         Console.WriteLine("Seleccione una opción:");
         Console.WriteLine("1. Crear usuario");
-        Console.WriteLine("2. Consultar usuarios");
-        Console.WriteLine("3. Actualizar usuario");
-        Console.WriteLine("4. Eliminar usuario");
-        Console.WriteLine("5. Agregar película");
-        Console.WriteLine("6. Consultar películas");
-        Console.WriteLine("7. Actualizar película");
-        Console.WriteLine("8. Eliminar película");
-        Console.WriteLine("9. Salir");
+        Console.WriteLine("2. Consultar todos los usuarios");
+        Console.WriteLine("3. Consultar usuario por ID");
+        Console.WriteLine("4. Actualizar usuario");
+        Console.WriteLine("5. Eliminar usuario");
+        Console.WriteLine("6. Agregar película");
+        Console.WriteLine("7. Consultar películas");
+        Console.WriteLine("8. Actualizar película");
+        Console.WriteLine("9. Eliminar película");
 
         var option = Int32.Parse(Console.ReadLine());
 
@@ -83,6 +83,28 @@ public class Program
                 }
 
                 break;
+
+            case 3:
+
+                Console.WriteLine("-- Consultar Usuario por ID --");
+
+                Console.Write("Digite el ID del usuario: ");
+                var idToSearch = int.Parse(Console.ReadLine());
+
+                var userToSearch = new User() { Id = idToSearch };
+
+                uCrud = new UserCrudFactory();
+                var retrievedUser = uCrud.RetrieveById<User>(userToSearch);
+
+                if (retrievedUser != null)
+                {
+                    Console.WriteLine(JsonConvert.SerializeObject(retrievedUser));
+                }
+                else
+                {
+                    Console.WriteLine("Usuario no encontrado.");
+                }
+            break;
 
             case 5:
                 Console.WriteLine("-- Agregar Película --");

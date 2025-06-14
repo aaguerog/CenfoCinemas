@@ -108,7 +108,7 @@ public class Program
 
                 break;
 
-            case 5:
+            case 6:
                 Console.WriteLine("-- Agregar Película --");
 
                 Console.Write("Título: ");
@@ -145,7 +145,7 @@ public class Program
 
                 break;
 
-            case 6:
+            case 7:
                 Console.WriteLine("-- Consultar Películas --");
 
                 mCrud = new MovieCrudFactory();
@@ -157,7 +157,7 @@ public class Program
                 }
                 break;
 
-            case 7:
+            case 8:
                 Console.WriteLine("-- Consultar Película por ID --");
 
                 Console.Write("Ingrese el ID de la película: ");
@@ -178,10 +178,6 @@ public class Program
                 {
                     Console.WriteLine("Película no encontrada.");
                 }
-                break;
-
-            case 9:
-                Console.WriteLine("Saliendo del sistema.");
                 break;
 
             default:

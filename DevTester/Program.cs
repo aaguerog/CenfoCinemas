@@ -107,13 +107,30 @@ public class Program
                 Console.Write("Director: ");
                 var director = Console.ReadLine();
 
-                sqlOperation.ProcedureName = "CRE_MOVIE_PR";
-                sqlOperation.AddStringParameter("P_Title", title);
-                sqlOperation.AddStringParameter("P_Description", description);
-                sqlOperation.AddDateTimeParam("P_ReleaseDate", releaseDate);
-                sqlOperation.AddStringParameter("P_Genre", genre);
-                sqlOperation.AddStringParameter("P_Director", director);
+                var movie = new Movie()
+                {
+                    Title = title,
+                    Description = description,
+                    ReleaseDate = releaseDate,
+                    Genre = genre,
+                    Director = director
+                };
 
+                var mCrud = new MovieCrudFactory();
+                mCrud.Create(movie);
+
+                break;
+
+            case 6:
+                Console.WriteLine("-- Consultar Películas --");
+
+                mCrud = new MovieCrudFactory();
+                var listMovies = mCrud.RetrieveAll<Movie>();
+
+                foreach (var m in listMovies)
+                {
+                    Console.WriteLine(JsonConvert.SerializeObject(m));
+                }
                 break;
 
             case 9:

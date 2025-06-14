@@ -84,6 +84,30 @@ public class Program
 
                 break;
 
+            case 3:
+                Console.WriteLine("-- Consultar Usuario por ID --");
+
+                Console.Write("Ingrese el ID del usuario: ");
+                int userId;
+                while (!int.TryParse(Console.ReadLine(), out userId))
+                {
+                    Console.Write("Formato inválido. Ingrese un número: ");
+                }
+
+                uCrud = new UserCrudFactory();
+                var userById = uCrud.RetrieveById<User>(userId);
+
+                if (userById != null)
+                {
+                    Console.WriteLine(JsonConvert.SerializeObject(userById));
+                }
+                else
+                {
+                    Console.WriteLine("Usuario no encontrado.");
+                }
+
+                break;
+
             case 5:
                 Console.WriteLine("-- Agregar Película --");
 
@@ -133,6 +157,29 @@ public class Program
                 }
                 break;
 
+            case 7:
+                Console.WriteLine("-- Consultar Película por ID --");
+
+                Console.Write("Ingrese el ID de la película: ");
+                int movieId;
+                while (!int.TryParse(Console.ReadLine(), out movieId))
+                {
+                    Console.Write("Formato inválido. Ingrese un número: ");
+                }
+
+                mCrud = new MovieCrudFactory();
+                var movieById = mCrud.RetrieveById<Movie>(movieId);
+
+                if (movieById != null)
+                {
+                    Console.WriteLine(JsonConvert.SerializeObject(movieById));
+                }
+                else
+                {
+                    Console.WriteLine("Película no encontrada.");
+                }
+                break;
+
             case 9:
                 Console.WriteLine("Saliendo del sistema.");
                 break;
@@ -141,8 +188,5 @@ public class Program
                 Console.WriteLine("Opción no válida.");
                 break;
         }
-
-
-
     }
 }

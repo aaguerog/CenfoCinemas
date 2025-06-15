@@ -1,5 +1,6 @@
 ﻿
 
+using CoreApp;
 using DataAccess.CRUD;
 using DataAccess.DAO;
 using DataAccess.DAOs;
@@ -65,8 +66,8 @@ public class Program
                     BirthDate = birthDate
                 };
 
-                var uCrud = new UserCrudFactory();
-                uCrud.Create(user);
+                var um = new UserManager();
+                um.Create(user);
 
                 break;
 
@@ -74,13 +75,13 @@ public class Program
 
                 Console.WriteLine("-- Consultar Usuarios --");
 
-                uCrud = new UserCrudFactory();
+                /*uCrud = new UserCrudFactory();
                 var listUsers = uCrud.RetrieveAll<User>();
 
                 foreach(var u in listUsers)
                 { 
                     Console.WriteLine(JsonConvert.SerializeObject(u));
-                }
+                }*/
 
                 break;
 
@@ -94,7 +95,7 @@ public class Program
                     Console.Write("Formato inválido. Ingrese un número: ");
                 }
 
-                uCrud = new UserCrudFactory();
+                /*uCrud = new UserCrudFactory();
                 var userById = uCrud.RetrieveById<User>(userId);
 
                 if (userById != null)
@@ -104,7 +105,7 @@ public class Program
                 else
                 {
                     Console.WriteLine("Usuario no encontrado.");
-                }
+                }*/
 
                 break;
 
@@ -140,21 +141,21 @@ public class Program
                     Director = director
                 };
 
-                var mCrud = new MovieCrudFactory();
-                mCrud.Create(movie);
+                var mm = new MovieManager();
+                mm.Create(movie);
 
                 break;
 
             case 7:
                 Console.WriteLine("-- Consultar Películas --");
 
-                mCrud = new MovieCrudFactory();
+                /*mCrud = new MovieCrudFactory();
                 var listMovies = mCrud.RetrieveAll<Movie>();
 
                 foreach (var m in listMovies)
                 {
                     Console.WriteLine(JsonConvert.SerializeObject(m));
-                }
+                }*/
                 break;
 
             case 8:
@@ -167,7 +168,7 @@ public class Program
                     Console.Write("Formato inválido. Ingrese un número: ");
                 }
 
-                mCrud = new MovieCrudFactory();
+                /*mCrud = new MovieCrudFactory();
                 var movieById = mCrud.RetrieveById<Movie>(movieId);
 
                 if (movieById != null)
@@ -177,7 +178,7 @@ public class Program
                 else
                 {
                     Console.WriteLine("Película no encontrada.");
-                }
+                }*/
                 break;
 
             default:

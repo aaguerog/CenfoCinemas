@@ -52,7 +52,7 @@ namespace DataAccess.CRUD
             {
                 foreach (var row in lstResult)
                 {
-                    var movie = BuldUser(row);
+                    var movie = BuildMovie(row);
                     lstMovies.Add((T)Convert.ChangeType(movie, typeof(T)));
                 }
             }
@@ -70,7 +70,24 @@ namespace DataAccess.CRUD
             if (lstResult != null && lstResult.Count > 0)
             {
                 var row = lstResult[0];
-                return (T)Convert.ChangeType(BuldUser(row), typeof(T));
+                return (T)Convert.ChangeType(BuildMovie(row), typeof(T));
+            }
+            return default(T);
+        }
+
+        public T RetrieveByMovieTitle<T>(Movie movie)
+        {
+            var sqlOperation = new SqlOperation() { ProcedureName = "RET_MOVIE_BY_TITLE_PR" };
+            sqlOperation.AddStringParameter("P_Title", movie.Title);
+
+            var lstResult = _sqlDao.ExecuteQueryProcedure(sqlOperation);
+
+            if (lstResult.Count > 0)
+            {
+                var row = lstResult[0];
+                movie = BuildMovie(row);
+
+                return (T)Convert.ChangeType(movie, typeof(T));
             }
             return default(T);
         }
@@ -80,7 +97,7 @@ namespace DataAccess.CRUD
             throw new NotImplementedException();
         }
 
-        private Movie BuldUser(Dictionary<string, object> row)
+        private Movie BuildMovie(Dictionary<string, object> row)
         {
             var movie = new Movie()
             {

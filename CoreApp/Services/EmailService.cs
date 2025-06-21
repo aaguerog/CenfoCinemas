@@ -14,7 +14,7 @@ namespace CoreApp.Services
         private readonly string senderEmail = "aaguerog@ucenfotec.ac.cr";
         private readonly string appPassword = "ogbd idpz kuys bypb";
 
-        public void SendWelcomeEmail(string toEmail, string userName)
+        public void EmailCreateUser(string toEmail, string userName)
         {
             try
             {
@@ -38,7 +38,33 @@ namespace CoreApp.Services
             }
             catch (Exception ex)
             {
-                // Puedes loguear o manejar el error como prefieras
+                Console.WriteLine($"Error al enviar el correo: {ex.Message}");
+            }
+        }
+        public void EmailNewMovie(string movieTitle, List<string> userEmails)
+        {
+            try
+            {
+                var client = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    Credentials = new NetworkCredential(senderEmail, appPassword),
+                    EnableSsl = true
+                };
+                foreach (var email in userEmails)
+                {
+                    var mail = new MailMessage
+                    {
+                        From = new MailAddress(senderEmail, "CenfoCinemas"),
+                        Subject = "Nueva Película Disponible",
+                        Body = $"Hola,\n\n¡Tenemos una nueva película disponible: {movieTitle}!\n\n¡No te la pierdas!",
+                        IsBodyHtml = false
+                    };
+                    mail.To.Add(email);
+                    client.Send(mail);
+                }
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine($"Error al enviar el correo: {ex.Message}");
             }
         }

@@ -1,4 +1,5 @@
-﻿using DataAccess.CRUD;
+﻿using CoreApp.Services;
+using DataAccess.CRUD;
 using DTOs;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,13 @@ namespace CoreApp
                 if(mExist == null)
                 {
                     mCrud.Create(movie);
-                    //AHORA SIGUE EL ENVIO DE CORREO A TODOS LOS USUARIOS
+
+                    var uCrud = new UserCrudFactory();
+                    var userEmails = uCrud.RetrieveAll<User>().Select(u => u.Email).ToList();
+
+                    var emailService = new EmailService();
+                    emailService.EmailNewMovie(movie.Title, userEmails);
+
                 }
                 else
                 {

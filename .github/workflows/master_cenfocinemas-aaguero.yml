@@ -25,7 +25,7 @@ jobs:
 
       - name: Build WEB API
         run: dotnet build ./WebAPI/WebAPI.csproj --configuration Debug
-        #prueba
+
       - name: dotnet publish WEB API
         run: dotnet publish ./WebAPI/WebAPI.csproj -c Debug -o "${{env.DOTNET_ROOT}}/myapp"
 

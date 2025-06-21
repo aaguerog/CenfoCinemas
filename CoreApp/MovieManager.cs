@@ -48,5 +48,44 @@ namespace CoreApp
                 ManageException(ex);
             }
         }
+
+        public List<Movie> RetrieveAll()
+        {
+            var mCrud = new MovieCrudFactory();
+            return mCrud.RetrieveAll<Movie>();
+        }
+
+        public Movie RetrieveById(int id)
+        {
+            var mCrud = new MovieCrudFactory();
+            var movie = mCrud.RetrieveById<Movie>(id);
+            return movie;
+        }
+
+        public void Update(Movie movie)
+        {
+            try
+            {
+                var mCrud = new MovieCrudFactory();
+                mCrud.Update(movie);
+            }
+            catch (Exception ex)
+            {
+                ManageException(ex);
+            }
+        }
+        public void Delete(int id)
+        {
+            try
+            {
+                var movie = new Movie { Id = id };
+                var mCrud = new MovieCrudFactory();
+                mCrud.Delete(movie);
+            }
+            catch (Exception ex)
+            {
+                ManageException(ex);
+            }
+        }
     }
 }

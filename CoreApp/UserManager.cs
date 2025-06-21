@@ -107,10 +107,11 @@ namespace CoreApp
             }
         }
 
-        public void Delete(User user)
+        public void Delete(int id)
         {
             try
             {
+                var user = new User { Id = id };
                 var uCrud = new UserCrudFactory();
                 uCrud.Delete(user);
             }

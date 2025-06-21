@@ -126,7 +126,7 @@ namespace WebAPI.Controllers
             try
             {
                 var um = new UserManager();
-                //um.Delete(id);
+                um.Delete(id);
                 return Ok("Usuario eliminado exitosamente.");
             }
             catch (Exception ex)

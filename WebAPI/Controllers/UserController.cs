@@ -121,12 +121,12 @@ namespace WebAPI.Controllers
 
         [HttpDelete]
         [Route("Delete")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(User user)
         {
             try
             {
                 var um = new UserManager();
-                um.Delete(id);
+                um.Delete(user.Id);
                 return Ok("Usuario eliminado exitosamente.");
             }
             catch (Exception ex)

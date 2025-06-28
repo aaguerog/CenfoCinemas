@@ -12,6 +12,24 @@ function MoviesViewController() {
 
         console.log("Movie init view --> ok");
         this.LoadTable();
+
+        //Asociar el evento de click al boton de crear
+        $('#btnCreate').click(function () {
+            var vc = new MoviesViewController();
+            vc.Create();
+        });
+
+        //Asociar el evento de click al boton de actualizar
+        $('#btnUpdate').click(function () {
+            var vc = new MoviesViewController();
+            vc.Update();
+        });
+
+        //Asociar el evento de click al boton de eliminar
+        $('#btnDelete').click(function () {
+            var vc = new MoviesViewController();
+            vc.Delete();
+        });
     }
 
     //Metodo para la carga de una tabla
@@ -60,6 +78,103 @@ function MoviesViewController() {
                 "dataSrc": ""
             },
             "columns": columns,
+        });
+
+        //Asingar eventos de carga de datos o binding segun el clic en la tabla
+        $('#tblMovies tbody').on('click', 'tr', function () {
+
+            //extraemos la fila
+
+            var row = $(this).closest('tr');
+
+            //extraemos el objeto de la fila
+            var movieDTO = $("#tblMovies").DataTable().row(row).data();
+
+            //Binding con el row
+            $("#txtId").val(movieDTO.id);
+            $("#txtTitle").val(movieDTO.title);
+            $("#txtDescription").val(movieDTO.description);
+            $("#txtGenre").val(movieDTO.genre);
+            $("#txtDirector").val(movieDTO.director);
+
+            //fecha tiene un formato
+            var onlyDate = movieDTO.releaseDate.split("T");
+            $("#txtReleaseDate").val(onlyDate[0]);
+        })
+    }
+
+    this.Create = function () {
+
+        var movieDTO = {};
+        //Atributos on valores default, que son controlados por el API
+        movieDTO.id = 0;
+        movieDTO.created = "2025-01-01";
+        movieDTO.updated = "2025-01-01";
+
+        //Atributos que el usuario debe ingresar
+        movieDTO.title = $("#txtTitle").val();
+        movieDTO.description = $("#txtDescription").val();
+        movieDTO.releaseDate = $("#txtReleaseDate").val();
+        movieDTO.genre = $("#txtGenre").val();
+        movieDTO.director = $("#txtDirector").val();
+
+        //Enviar la data al API
+        var ca = new ControlActions();
+        var urlService = this.ApiEndPointName + "/Create";
+
+        ca.PostToAPI(urlService, movieDTO, function () {
+            //recargo de la tabla
+            $("#tblMovies").DataTable().ajax.reload();
+        });
+    }
+
+    this.Update = function () {
+
+        var movieDTO = {};
+        //Atributos on valores default, que son controlados por el API
+        movieDTO.id = $("#txtId").val();
+        movieDTO.created = "2025-01-01";
+        movieDTO.updated = "2025-01-01";
+
+        //Atributos que el usuario debe ingresar
+        movieDTO.title = $("#txtTitle").val();
+        movieDTO.description = $("#txtDescription").val();
+        movieDTO.releaseDate = $("#txtReleaseDate").val();
+        movieDTO.genre = $("#txtGenre").val();
+        movieDTO.director = $("#txtDirector").val();
+
+        //Enviar la data al API
+        var ca = new ControlActions();
+        var urlService = this.ApiEndPointName + "/Update";
+
+        ca.PutToAPI(urlService, movieDTO, function () {
+            //recargo de la tabla
+            $("#tblMovies").DataTable().ajax.reload();
+        });
+    }
+
+    this.Delete = function () {
+
+        var movieDTO = {};
+        //Atributos on valores default, que son controlados por el API
+        movieDTO.id = $("#txtId").val();
+        movieDTO.created = "2025-01-01";
+        movieDTO.updated = "2025-01-01";
+
+        //Atributos que el usuario debe ingresar
+        movieDTO.title = $("#txtTitle").val();
+        movieDTO.description = $("#txtDescription").val();
+        movieDTO.releaseDate = $("#txtReleaseDate").val();
+        movieDTO.genre = $("#txtGenre").val();
+        movieDTO.director = $("#txtDirector").val();
+
+        //Enviar la data al API
+        var ca = new ControlActions();
+        var urlService = this.ApiEndPointName + "/Delete";
+
+        ca.DeleteToAPI(urlService, movieDTO, function () {
+            //recargo de la tabla
+            $("#tblMovies").DataTable().ajax.reload();
         });
     }
 }

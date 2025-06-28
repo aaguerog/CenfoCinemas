@@ -80,12 +80,12 @@ namespace WebAPI.Controllers
 
         [HttpDelete]
         [Route("Delete")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Movie movie)
         {
             try
             {
                 var mm = new MovieManager();
-                mm.Delete(id);
+                mm.Delete(movie.Id);
                 return Ok("Pelicula eliminada exitosamente");
             }
             catch (Exception ex)

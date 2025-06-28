@@ -74,10 +74,10 @@ function UsersViewController() {
             "columns": columns,
         });
 
-        //asignar eventos de arga de datos o binding segun el clic en la tabla
+        //asignar eventos de carga de datos o binding segun el clic en la tabla
         $('#tblUsers tbody').on('click', 'tr', function () {
 
-            //extraemor la fila
+            //extraemos la fila
             var row = $(this).closest('tr');
 
             //extraermos el dato

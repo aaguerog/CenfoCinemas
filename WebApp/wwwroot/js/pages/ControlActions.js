@@ -1,6 +1,6 @@
 ﻿function ControlActions() {
 	//Ruta base del API
-	this.URL_API = "https://cenfocinemas-aaguero-hmg5fchhhzfqa5c6.eastus2-01.azurewebsites.net/swagger/index.html";
+	this.URL_API = "https://cenfocinemas-aaguero-hmg5fchhhzfqa5c6.eastus2-01.azurewebsites.net/api/";
 
 	this.GetUrlApiService = function (service) {
 		return this.URL_API + service;

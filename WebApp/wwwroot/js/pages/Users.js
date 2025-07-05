@@ -30,7 +30,14 @@ function UsersViewController() {
             var vc = new UsersViewController();
             vc.Delete();
         });
+
+        $('#btnRetrieveById').click(function () {
+            var vc = new UsersViewController();
+            vc.RetrieveById();
+        });
+
     }
+
 
     //Metodo para la carga de una tabla
     this.LoadTable = function () {
@@ -177,6 +184,40 @@ function UsersViewController() {
         })
 
     }
+
+    this.RetrieveById = function () {
+        var id = $('#txtSearchId').val();
+
+        if (!id) {
+            Swal.fire("Error", "Debe ingresar un ID válido", "warning");
+            return;
+        }
+
+        var ca = new ControlActions();
+        var urlService = ca.GetUrlApiService(this.ApiEndPointName + "/RetrieveById?id=" + id);
+
+        $.ajax({
+            url: urlService,
+            type: "GET",
+            success: function (userDTO) {
+                $('#txtId').val(userDTO.id);
+                $('#txtUserCode').val(userDTO.userCode);
+                $('#txtName').val(userDTO.name);
+                $('#txtEmail').val(userDTO.email);
+                $('#txtStatus').val(userDTO.status);
+
+                var onlyDate = userDTO.birthDate.split("T")[0];
+                $('#txtBirthDate').val(onlyDate);
+            },
+            error: function (jqXHR) {
+                if (jqXHR.status === 404) {
+                    Swal.fire("No encontrado", "El usuario con ID " + id + " no existe.", "warning");
+                } else {
+                    Swal.fire("Error", "Error al recuperar el usuario: " + jqXHR.statusText, "error");
+                }
+            }
+        });
+    };
 }
 
 $(document).ready(function () {

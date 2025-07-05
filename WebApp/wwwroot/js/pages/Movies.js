@@ -30,6 +30,12 @@ function MoviesViewController() {
             var vc = new MoviesViewController();
             vc.Delete();
         });
+
+        $('#btnSearchMovie').click(function () {
+            var vc = new MoviesViewController();
+            vc.RetrieveById();
+        });
+
     }
 
     //Metodo para la carga de una tabla
@@ -177,6 +183,38 @@ function MoviesViewController() {
             $("#tblMovies").DataTable().ajax.reload();
         });
     }
+
+    this.RetrieveById = function () {
+        var id = $('#txtSearchMovieId').val();
+
+        if (!id) {
+            Swal.fire("Error", "Debe ingresar un ID válido", "warning");
+            return;
+        }
+
+        var ca = new ControlActions();
+        var urlService = ca.GetUrlApiService(this.ApiEndPointName + "/RetrieveById?id=" + id);
+
+        $.ajax({
+            url: urlService,
+            type: "GET",
+            success: function (movieDTO) {
+                $('#txtId').val(movieDTO.id);
+                $('#txtTitle').val(movieDTO.title);
+                $('#txtDescription').val(movieDTO.description);
+                $('#txtReleaseDate').val(movieDTO.releaseDate.split("T")[0]);
+                $('#txtGenre').val(movieDTO.genre);
+                $('#txtDirector').val(movieDTO.director);
+            },
+            error: function (jqXHR) {
+                if (jqXHR.status === 404) {
+                    Swal.fire("No encontrada", "La película con ID " + id + " no existe.", "warning");
+                } else {
+                    Swal.fire("Error", "Error al recuperar la película: " + jqXHR.statusText, "error");
+                }
+            }
+        });
+    };
 }
 
 $(document).ready(function () {
